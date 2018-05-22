@@ -1,0 +1,110 @@
+import plagas.*
+
+describe "test de plagas" {
+	
+
+  	var hogar1 = new Hogar (mugre = 200, confort = 1000)
+  	var huerta1 = new Huerta (produccion = 1000)
+    var mascota1 = new Mascota (salud = 1000)
+    var cucarachas1 = new Cucaracha (poblacion = 100)
+  	var pulgas1 = new Pulga (poblacion = 100)
+	var garrapatas1 = new Garrapata (poblacion = 100)
+	var mosquitos1 = new Mosquito (poblacion = 100, infeccion = #{"malaria", "paludismo", "pelotudismo"})
+	
+	test "un hogar es confortable" {
+		assert.that(hogar1.esBueno())
+		
+	}
+	
+	test "una huerta produce lo suficiente" {
+		assert.that(huerta1.esBueno())
+		
+	}
+	
+	test "una mascota es saludable" {
+		assert.that(mascota1.esBueno())
+	}
+	
+	test "retorna el daño producido por las cucarachas y si transmite enfermedades" {
+		assert.equals(cucarachas1.danioProducido(), 50)
+		assert.notThat(cucarachas1.transmiteEnfermedades())
+	}
+	
+	test "retorna el daño producido por las pulgas y si transmite enfermedades" {
+		assert.equals(pulgas1.danioProducido(), 200)
+		assert.that(pulgas1.transmiteEnfermedades())
+		
+	}
+	
+	test "retorna el daño producido por las garrapatas y si transmite enfermedades" {
+		assert.equals(garrapatas1.danioProducido(), 200)
+		assert.that(garrapatas1.transmiteEnfermedades())
+		
+	}
+	
+	test "retorna el daño producido por los mosquitos y si transmite enfermedades" {
+		assert.equals(mosquitos1.danioProducido(), 100)
+		assert.that(mosquitos1.transmiteEnfermedades())
+		
+	}
+	
+	test "un hogar es atacado por una plaga de cucarachas" {
+		hogar1.ataqueDePlaga(cucarachas1) 
+		assert.equals(hogar1.mugre() , 250)
+		
+	}
+	
+	test "una huerta es atacada por una plaga de mosquitos" {
+		huerta1.ataqueDePlaga(mosquitos1)
+		assert.equals(huerta1.produccion(), 890)
+	}
+	
+	test "una mascota es atacada por una plaga de garrapatas" {
+	   mascota1.ataqueDePlaga(garrapatas1) 
+	   assert.equals(mascota1.salud(), 800)
+	   }
+	   
+	test "un hogar es atacado por una plaga de cucarachas y aumenta su poblacion" {
+		cucarachas1.ataque(hogar1) 
+		assert.equals(hogar1.mugre() , 250)
+		assert.equals(cucarachas1.poblacion(), 110)
+		
+	}
+	
+	test "una huerta es atacada por una plaga de mosquitos y aumenta su poblacion" {
+		mosquitos1.ataque(huerta1) 
+		assert.equals(huerta1.produccion() , 890)
+		assert.equals(mosquitos1.poblacion(), 110)	}
+	
+	test "una mascota es atacada por una plaga de garrapatas y aumenta su poblacion" {
+	    garrapatas1.ataque(mascota1) 
+		assert.equals(mascota1.salud() , 800)
+		assert.equals(garrapatas1.poblacion(), 120)
+	   }   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
